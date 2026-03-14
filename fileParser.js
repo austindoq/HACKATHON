@@ -19,16 +19,45 @@ function createSoup(fileContents) {
 }
 
 function createClassList(classes) {
-  return classes.split(" ")
+  return classes.split(" ");
+}
+
+function iterateElements(soup) {
+  let currentElement = soup.find("body");
+  let currentElementClasses;
+
+  while (currentElement !== null) {
+    if (currentElement._text) {
+      currentElement = currentElement.nextElement;
+      continue;
+    }
+    if (currentElement.attrs.class) {
+      currentElementClasses = createClassList(currentElement.attrs.class);
+      console.log(currentElementClasses);
+      // tailwindClassBuilder
+      // sortTailwindClasses
+      // rewriteElement
+      // rewriteHTMLFile
+    }
+
+    if (currentElement.nextElement) {
+      let parent = currentElement.parentElement;
+      while (parent && !currentElement.nextElement) {
+        currentElement = parent.nextElementSibling;
+        parent = parent.parentElement;
+      }
+    }
+
+    currentElement = currentElement.nextElement;
+  }
 }
 
 function main() {
   const fileContents = getFileContents();
   const soup = createSoup(fileContents);
-  const header = soup.find("header");
-  const classes = header.attrs.class;
-  const classList = createClassList(classes)
-  console.log(classList);
+  iterateElements(soup);
+  // const elements = soup.nextElements();
+  // console.log(elements);
 }
 
 main();
