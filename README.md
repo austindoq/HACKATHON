@@ -3,7 +3,7 @@
 TEAM:
 SAM MYNOTT
 LUKA GAJIC
-EDWARD KIN
+EDWARD KIM
 AUSTIN DOQUIATAN
 
 // ------------------------------
