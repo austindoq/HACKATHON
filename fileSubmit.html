@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input
+      type="file"
+      id="userFileInput"
+      name="userFileInput"
+      placeholder="FILE HERE"
+      class="hidden"
+    />
+    <script type="module" src="./fileParser.js"></script>
+    <!-- <script>
+      const func = () => {
+        console.log("Apple");
+      };
+    </script> -->
+    <script>
+      // add this to the second page
+      const savedCategories = JSON.parse(
+        localStorage.getItem("userCategoryOrder"),
+      );
+
+      console.log(savedCategories);
+    </script>
+  </body>
+</html>
