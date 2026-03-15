@@ -25,12 +25,12 @@ function iterateElements(soup) {
 
       const categorizedClasses = tailwindClassBuilder(
         currentElementClasses,
-        tailwindClassList
+        tailwindClassList,
       );
 
       const sortedClassList = sortTailwindClasses(
         categorizedClasses,
-        userOrderPref
+        userOrderPref,
       );
 
       const sortedClassString = rewriteElement(sortedClassList);
@@ -42,7 +42,7 @@ function iterateElements(soup) {
   return "<!doctype html>\n" + soup.documentElement.outerHTML;
 }
 
-function downloadFile(content, filename = "updated.html") {
+function downloadFile(content, filename) {
   const blob = new Blob([content], { type: "text/html" });
   const url = URL.createObjectURL(blob);
 
@@ -58,9 +58,13 @@ async function main() {
   const htmlContent = await readData();
   const soup = createSoup(htmlContent);
   const finalDocument = iterateElements(soup);
+  // renames the downloaded file to be the same as users file
+  const fileInput = document.getElementById("userFileInput");
+  const fileName = fileInput.files[0].name;
+  downloadFile(finalDocument, fileName);
 
   console.log(finalDocument);
-  downloadFile(finalDocument);
+  // downloadFile(finalDocument);
 }
 
 main();
