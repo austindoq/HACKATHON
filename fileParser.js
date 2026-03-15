@@ -9,6 +9,14 @@ import { rewriteElement } from "./rewriteElement.js";
 
 // removed: getFileContents() - not needed, readData() handles file input
 
+function writeNewFile(soup) {
+  try {
+    fs.writeFileSync("dummy-new.html", soup);
+  } catch (error) {
+    console.log(`${error}`);
+  }
+}
+
 function createSoup(fileContents) {
   const parser = new DOMParser();
   // console.log(parser.parseFromString(fileContents, "text/html"));
@@ -99,8 +107,6 @@ async function main() {
   const soup = createSoup(htmlContent);
   // console.log(soup);
   iterateElements(soup);
-  // const elements = soup.nextElements();
-  // console.log(elements);
 }
 
 main();
