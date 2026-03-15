@@ -1,35 +1,30 @@
-let userClassObject = {
-  "border color": "Border-teal-700",
-  flex: "flex flex-row",
-  others: "hello world",
-  colors: "bg-blue-50",
-  
-};
+// // placeholder
+// let userClassObject = {
+//   "border color": ["border-teal-700"],
+//   flex: ["flex", "flex-row"],
+//   others: ["hello", "world"],
+//   colors: ["bg-blue-50"],
+// };
+// // placeholder
+// let userOrderPreference = ["border color", "colors", "flex"];
 
-let userOrderPreference = ["border color", "colors", "flex"];
-
-function sortTailwindClasses(userClassObj, useOrderPref) {
+function sortTailwindClasses(userClassObj, userOrderPref) {
   let sortedOrderList = [];
 
-  for (const key of userOrderPreference) {
-    if (key in userClassObj) {
-      let isolatedValues = userClassObject[key].split(" ");
-      for (const value of isolatedValues) {
+  for (const item of userOrderPref) {
+    if (item in userClassObj) {
+      for (const value of userClassObj[item]) {
         sortedOrderList.push(value);
       }
     }
   }
-
-  //
-  for (const key in userClassObj) {
-    if (key == "others") {
-      let isolatedValues = userClassObject[key].split(" ");
-      for (const value of isolatedValues) {
+  for (const item in userClassObj) {
+    if (item == "others") {
+      for (const value of userClassObj[item]) {
         sortedOrderList.push(value);
       }
     }
   }
-  //
 
   return sortedOrderList;
 }
