@@ -3,18 +3,18 @@ import tailwindClassList from "./tailwind-classes.json" with { type: "json" }; /
 //This function takes a list of user Tailwind classes as strings, and creates a new JS Object containing an element's Tailwind classes categorized
 // against the Tailwind category master list. Able to handle duplicate classes.
 
-const userClasses = [
-  "flex-row",
-  "pt-4",
-  "mt-2",
-  "mb-4",
-  "mb-4",
-  "pb-3",
-  "flex",
-  "h-4",
-  "hello",
-  "world",
-];
+// const userClasses = [
+//   "flex-row",
+//   "pt-4",
+//   "mt-2",
+//   "mb-4",
+//   "mb-4",
+//   "pb-3",
+//   "flex",
+//   "h-4",
+//   "hello",
+//   "world",
+// ];
 
 function tailwindClassBuilder(userClasses, tailwindClassList) {
   let categorizedClasses = {};
@@ -57,4 +57,5 @@ function tailwindClassBuilder(userClasses, tailwindClassList) {
   return categorizedClasses;
 }
 
-console.log(tailwindClassBuilder(userClasses, tailwindClassList));
+export { tailwindClassBuilder };
+// console.log(tailwindClassBuilder(userClasses, tailwindClassList));
