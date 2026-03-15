@@ -19,5 +19,13 @@
         console.log("Apple");
       };
     </script> -->
+    <script>
+      // add this to the second page
+      const savedCategories = JSON.parse(
+        localStorage.getItem("userCategoryOrder"),
+      );
+
+      console.log(savedCategories);
+    </script>
   </body>
 </html>

@@ -64,17 +64,14 @@ new Sortable(list, {
 });
 
 document.getElementById("submitBtn").addEventListener("click", () => {
-
-  const newCategories = Array.from(list.children).map(li => li.dataset.value);
+  const newCategories = Array.from(list.children).map((li) => li.dataset.value);
 
   // save array to localStorage
   localStorage.setItem("userCategoryOrder", JSON.stringify(newCategories));
 
   // redirect to next page
-  window.location.href = "test.html";
-
+  window.location.href = "index.html";
 });
-
 
 // add this to the second page
 // const savedCategories = JSON.parse(localStorage.getItem("userCategoryOrder"));

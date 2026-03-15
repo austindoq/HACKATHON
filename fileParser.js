@@ -36,13 +36,15 @@ function iterateElements(soup) {
   // console.log(currentElement); //Element GOOD
 
   // MOCK
-  let userOrderPref = [
-    "border color",
-    "colors",
-    "flex",
-    "paddings",
-    "text color",
-  ];
+  // let userOrderPref = [
+  //   "border color",
+  //   "colors",
+  //   "flex",
+  //   "paddings",
+  //   "text color",
+  // ];
+
+  const userOrderPref = JSON.parse(localStorage.getItem("userCategoryOrder"));
 
   while (currentElement !== null) {
     if (currentElement.nodeType === Node.TEXT_NODE) {
@@ -63,7 +65,7 @@ function iterateElements(soup) {
       sortedClassList = sortTailwindClasses(categorizedClasses, userOrderPref);
       sortedClassString = rewriteElement(sortedClassList);
       currentElement.className = sortedClassString;
-      // console.log(sortedClassString);
+      console.log(sortedClassString);
     }
 
     if (currentElement.nextElementSibling) {
