@@ -2,16 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Sortable Categories</title>
-
     <!-- SortableJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
     <script type="module" src="getUserOrderRef.js"></script>
-
+    <title>Tailwind Class Sorter</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
-        padding: 30px;
         background: #f5f5f5;
       }
 
@@ -55,14 +53,34 @@
   </head>
 
   <body>
-    <h2>Drag to reorder categories</h2>
+    <div id="site-container" class="h-screen">
+      <nav class="bg-slate-800 border-black border-b-2 text-gray-200">
+        <h1 class="text-5xl">TAILWIND CLASS SORTER 3000</h1>
+      </nav>
+      <main class="p-8">
+        <h2 class="text-3xl font-bold">
+          Drag the Tailwind class categories into the order you want them in
+          your HTML code! (Top of stack will show up first)
+        </h2>
+        <div
+          id="submission-content"
+          class="border border-black rounded-lg p-4 flex gap-8 justify-evenly"
+        >
+          <ul id="categoryList" class="w-[50%]"></ul>
+          <div id="right-side-main" class="flex flex-col mt-40">
+            <h1 class="text-3xl">Create Tailwind Preferences Order</h1>
+            <button id="submitBtn" class="h-fit">Submit Order</button>
+          </div>
+        </div>
 
-    <ul id="categoryList"></ul>
-
-    <button id="submitBtn">Submit Order</button>
-
-    <div id="output"></div>
+        <div id="output" class="hidden"></div>
+      </main>
+      <footer class="bg-slate-800 text-gray-200">
+        <div>
+          <h1 class="text-2xl">TEAM BLACK FANG</h1>
+          <img src="./svg/white-fangs-svgrepo-com.svg"></img>
+        </div>
+      </footer>
+    </div>
   </body>
-
-
 </html>
