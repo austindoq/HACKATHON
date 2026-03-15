@@ -29,4 +29,6 @@ function sortTailwindClasses(userClassObj, userOrderPref) {
   return sortedOrderList;
 }
 
-console.log(sortTailwindClasses(userClassObject, userOrderPreference));
+// console.log(sortTailwindClasses(userClassObject, userOrderPreference));
+
+export { sortTailwindClasses };

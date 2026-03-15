@@ -1,5 +1,8 @@
 import fs from "fs";
 import { createRequire } from "module";
+import { tailwindClassBuilder } from "./tailwindClassBuilder.js";
+import { sortTailwindClasses } from "./sortTailwindClasses.js";
+import tailwindClassList from "./tailwind-classes.json" with { type: "json" };
 
 const require = createRequire(import.meta.url);
 const JSSoup = require("jssoup").default;
@@ -25,6 +28,7 @@ function createClassList(classes) {
 function iterateElements(soup) {
   let currentElement = soup.find("body");
   let currentElementClasses;
+  let categorizedClasses;
 
   while (currentElement !== null) {
     if (currentElement._text) {
@@ -33,8 +37,12 @@ function iterateElements(soup) {
     }
     if (currentElement.attrs.class) {
       currentElementClasses = createClassList(currentElement.attrs.class);
-      console.log(currentElementClasses);
-      // tailwindClassBuilder
+      console.log(`currentElementClasses: ${currentElementClasses}`);
+      categorizedClasses = tailwindClassBuilder(
+        currentElementClasses,
+        tailwindClassList,
+      );
+      console.log(`categorizedClasses: ${JSON.stringify(categorizedClasses)}`);
       // sortTailwindClasses
       // rewriteElement
       // rewriteHTMLFile
