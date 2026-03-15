@@ -1,63 +1,70 @@
-import fs from "fs";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-const JSSoup = require("jssoup").default;
-
-function getFileContents() {
-  try {
-    const fileContents = fs.readFileSync("dummy.html", "utf8");
-    return fileContents;
-  } catch (error) {
-    console.log(`${error}`);
-  }
-}
+import { readData } from "./formSubmit.js";
+import { tailwindClassBuilder } from "./tailwindClassBuilder.js";
+import tailwindClassList from "./tailwind-classes.json" with { type: "json" };
+import { sortTailwindClasses } from "./sortTailwindClasses.js";
+import { rewriteElement } from "./rewriteElement.js";
 
 function createSoup(fileContents) {
-  const soup = new JSSoup(fileContents);
-  return soup;
+  const parser = new DOMParser();
+  return parser.parseFromString(fileContents, "text/html");
 }
 
 function createClassList(classes) {
-  return classes.split(" ");
+  return classes.trim().split(/\s+/);
 }
 
 function iterateElements(soup) {
-  let currentElement = soup.find("body");
-  let currentElementClasses;
+  const userOrderPref =
+    JSON.parse(localStorage.getItem("userCategoryOrder")) || [];
 
-  while (currentElement !== null) {
-    if (currentElement._text) {
-      currentElement = currentElement.nextElement;
-      continue;
-    }
-    if (currentElement.attrs.class) {
-      currentElementClasses = createClassList(currentElement.attrs.class);
-      console.log(currentElementClasses);
-      // tailwindClassBuilder
-      // sortTailwindClasses
-      // rewriteElement
-      // rewriteHTMLFile
-    }
+  const allElements = soup.body.querySelectorAll("*");
 
-    if (currentElement.nextElement) {
-      let parent = currentElement.parentElement;
-      while (parent && !currentElement.nextElement) {
-        currentElement = parent.nextElementSibling;
-        parent = parent.parentElement;
-      }
-    }
+  allElements.forEach((element) => {
+    if (element.className && typeof element.className === "string") {
+      const currentElementClasses = createClassList(element.className);
 
-    currentElement = currentElement.nextElement;
-  }
+      const categorizedClasses = tailwindClassBuilder(
+        currentElementClasses,
+        tailwindClassList,
+      );
+
+      const sortedClassList = sortTailwindClasses(
+        categorizedClasses,
+        userOrderPref,
+      );
+
+      const sortedClassString = rewriteElement(sortedClassList);
+
+      element.className = sortedClassString;
+    }
+  });
+
+  return "<!doctype html>\n" + soup.documentElement.outerHTML;
 }
 
-function main() {
-  const fileContents = getFileContents();
-  const soup = createSoup(fileContents);
-  iterateElements(soup);
-  // const elements = soup.nextElements();
-  // console.log(elements);
+function downloadFile(content, filename) {
+  const blob = new Blob([content], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+async function main() {
+  const htmlContent = await readData();
+  const soup = createSoup(htmlContent);
+  const finalDocument = iterateElements(soup);
+  // renames the downloaded file to be the same as users file
+  const fileInput = document.getElementById("userFileInput");
+  const fileName = fileInput.files[0].name;
+  downloadFile(finalDocument, fileName);
+
+  console.log(finalDocument);
+  // downloadFile(finalDocument);
 }
 
 main();

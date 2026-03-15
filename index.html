@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- SortableJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+    <script type="module" src="getUserOrderRef.js"></script>
+    <title>Tailwind Class Sorter</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+      }
+
+      #categoryList {
+        list-style: none;
+        padding: 0;
+        max-width: 400px;
+      }
+
+      #categoryList li {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        cursor: grab;
+      }
+
+      button {
+        margin-top: 15px;
+        padding: 10px 15px;
+        border: none;
+        background: #0f766e;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      #output {
+        margin-top: 20px;
+        background: white;
+        border: 1px solid #ddd;
+        padding: 12px;
+        white-space: pre;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="site-container" class="h-screen">
+      <nav class="bg-slate-800 border-black border-b-2 text-gray-200">
+        <h1 class="text-5xl">TAILWIND CLASS SORTER 3000</h1>
+      </nav>
+      <main class="p-8">
+        <h2 class="text-3xl font-bold">
+          Drag the Tailwind class categories into the order you want them in
+          your HTML code! (Top of stack will show up first)
+        </h2>
+        <div
+          id="submission-content"
+          class="border border-black rounded-lg p-4 flex gap-8 justify-evenly"
+        >
+          <ul id="categoryList" class="w-[50%]"></ul>
+          <div id="right-side-main" class="flex flex-col mt-40">
+            <h1 class="text-3xl">Create Tailwind Preferences Order</h1>
+            <button id="submitBtn" class="h-fit">Submit Order</button>
+          </div>
+        </div>
+
+        <div id="output" class="hidden"></div>
+      </main>
+      <footer class="bg-slate-800 text-gray-200">
+        <div>
+          <h1 class="text-2xl">TEAM BLACK FANG</h1>
+          <img src="./svg/white-fangs-svgrepo-com.svg"></img>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
