@@ -13,6 +13,7 @@ function rewriteElement(sortedArray) {
   for (const item of sortedArray) {
     sortedString += " " + item;
   }
+  sortedString = sortedString.trim();
   return sortedString;
 }
 
