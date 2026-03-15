@@ -5,6 +5,14 @@ import { readData } from "./formSubmit.js";
 
 // removed: getFileContents() - not needed, readData() handles file input
 
+function writeNewFile(soup) {
+  try {
+    fs.writeFileSync("dummy-new.html", soup);
+  } catch (error) {
+    console.log(`${error}`);
+  }
+}
+
 function createSoup(fileContents) {
   const parser = new DOMParser();
   return parser.parseFromString(fileContents, "text/html");
@@ -17,6 +25,18 @@ function createClassList(classes) {
 function iterateElements(soup) {
   let currentElement = soup.body.firstElementChild; // replaced: soup.find("body")
   let currentElementClasses;
+  let categorizedClasses;
+  let sortedClassList;
+  let sortedClassString;
+
+  // MOCK OBJECT
+  let userOrderPreference = [
+    "border color",
+    "colors",
+    "flex",
+    "paddings",
+    "text color",
+  ];
 
   while (currentElement !== null) {
     if (currentElement.nodeType === Node.TEXT_NODE) {
@@ -32,6 +52,7 @@ function iterateElements(soup) {
       // sortTailwindClasses
       // rewriteElement
       // rewriteHTMLFile
+      currentElement.attrs.class = sortedClassString;
     }
 
     if (currentElement.nextElementSibling) {
@@ -45,6 +66,9 @@ function iterateElements(soup) {
 
     currentElement = currentElement.nextElementSibling; // replaced: currentElement.nextElement
   }
+
+  let final = "<!doctype html>" + soup.prettify().slice(22);
+  writeNewFile(final);
 }
 
 //This function takes the user input file and converts it to a string.
@@ -70,8 +94,6 @@ async function main() {
   const soup = createSoup(htmlContent);
   console.log(soup);
   iterateElements(soup);
-  // const elements = soup.nextElements();
-  // console.log(elements);
 }
 
 main();
