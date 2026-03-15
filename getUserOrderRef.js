@@ -70,7 +70,7 @@ document.getElementById("submitBtn").addEventListener("click", () => {
   localStorage.setItem("userCategoryOrder", JSON.stringify(newCategories));
 
   // redirect to next page
-  window.location.href = "index.html";
+  window.location.href = "fileSubmit.html";
 });
 
 // add this to the second page
