@@ -1,21 +1,9 @@
-import fs from "fs";
-import { createRequire } from "module";
-import { tailwindClassBuilder } from "./tailwindClassBuilder.js";
-import { sortTailwindClasses } from "./sortTailwindClasses.js";
-import { rewriteElement } from "./rewriteElement.js";
-import tailwindClassList from "./tailwind-classes.json" with { type: "json" };
+// removed: import { createRequire } from "module";
+import { readData } from "./formSubmit.js";
 
-const require = createRequire(import.meta.url);
-const JSSoup = require("jssoup").default;
+// removed: createRequire and JSSoup setup
 
-function getFileContents() {
-  try {
-    const fileContents = fs.readFileSync("dummy.html", "utf8");
-    return fileContents;
-  } catch (error) {
-    console.log(`${error}`);
-  }
-}
+// removed: getFileContents() - not needed, readData() handles file input
 
 function writeNewFile(soup) {
   try {
@@ -26,8 +14,8 @@ function writeNewFile(soup) {
 }
 
 function createSoup(fileContents) {
-  const soup = new JSSoup(fileContents);
-  return soup;
+  const parser = new DOMParser();
+  return parser.parseFromString(fileContents, "text/html");
 }
 
 function createClassList(classes) {
@@ -35,7 +23,7 @@ function createClassList(classes) {
 }
 
 function iterateElements(soup) {
-  let currentElement = soup.find("body");
+  let currentElement = soup.body.firstElementChild; // replaced: soup.find("body")
   let currentElementClasses;
   let categorizedClasses;
   let sortedClassList;
@@ -51,51 +39,60 @@ function iterateElements(soup) {
   ];
 
   while (currentElement !== null) {
-    if (currentElement._text) {
-      currentElement = currentElement.nextElement;
+    if (currentElement.nodeType === Node.TEXT_NODE) {
+      // replaced: currentElement._text
+      currentElement = currentElement.nextElementSibling;
       continue;
     }
-    if (currentElement.attrs.class) {
-      currentElementClasses = createClassList(currentElement.attrs.class);
-      // console.log(`currentElementClasses: ${currentElementClasses}`);
-
-      categorizedClasses = tailwindClassBuilder(
-        currentElementClasses,
-        tailwindClassList,
-      );
-      // console.log(`categorizedClasses: ${JSON.stringify(categorizedClasses)}`);
-
-      sortedClassList = sortTailwindClasses(
-        categorizedClasses,
-        userOrderPreference,
-      );
-      // console.log(`sortedClassList: ${sortedClassList}`);
-
-      sortedClassString = rewriteElement(sortedClassList);
-      // console.log(`sortedClassString: ${sortedClassString}`);
-
+    if (currentElement.className) {
+      // replaced: currentElement.attrs.class
+      currentElementClasses = createClassList(currentElement.className);
+      console.log(currentElementClasses);
+      // tailwindClassBuilder
+      // sortTailwindClasses
+      // rewriteElement
       // rewriteHTMLFile
       currentElement.attrs.class = sortedClassString;
     }
 
-    if (currentElement.nextElement) {
+    if (currentElement.nextElementSibling) {
+      // replaced: currentElement.nextElement
       let parent = currentElement.parentElement;
-      while (parent && !currentElement.nextElement) {
+      while (parent && !currentElement.nextElementSibling) {
         currentElement = parent.nextElementSibling;
         parent = parent.parentElement;
       }
     }
 
-    currentElement = currentElement.nextElement;
+    currentElement = currentElement.nextElementSibling; // replaced: currentElement.nextElement
   }
 
   let final = "<!doctype html>" + soup.prettify().slice(22);
   writeNewFile(final);
 }
 
-function main() {
-  const fileContents = getFileContents();
-  const soup = createSoup(fileContents);
+//This function takes the user input file and converts it to a string.
+
+// function htmlString() {
+//   return new Promise((resolve) => {
+//     const userFileInput = document.getElementById("userFileInput");
+
+//     userFileInput.addEventListener("change", async (event) => {
+//       const htmlFile = event.target.files[0];
+//       const readObj = new FileReader();
+//       readObj.readAsText(htmlFile);
+//       readObj.onload = (e) => {
+//         resolve(e.target.result);
+//       };
+//     });
+//   });
+// }
+
+async function main() {
+  // const fileContents = getFileContents();
+  const htmlContent = await readData();
+  const soup = createSoup(htmlContent);
+  console.log(soup);
   iterateElements(soup);
 }
 
