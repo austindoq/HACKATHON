@@ -1,5 +1,12 @@
 // placeholder
-// let sortedArray = ['border-teal-700', 'bg-blue-50', 'flex', 'flex-row', 'hello', 'world']
+// let sortedArray = [
+//   "border-teal-700",
+//   "bg-blue-50",
+//   "flex",
+//   "flex-row",
+//   "hello",
+//   "world",
+// ];
 
 function rewriteElement(sortedArray) {
   let sortedString = "";
@@ -9,6 +16,5 @@ function rewriteElement(sortedArray) {
   return sortedString;
 }
 
-export { rewriteElement };
-
 // console.log(rewriteElement(sortedArray))
+export { rewriteElement };
