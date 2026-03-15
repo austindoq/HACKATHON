@@ -17,7 +17,7 @@ function htmlString() {
 
 async function readData() {
   const str = await htmlString();
-  console.log(str);
+  // console.log(str);
   return str;
 }
 

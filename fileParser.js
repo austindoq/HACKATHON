@@ -1,5 +1,9 @@
 // removed: import { createRequire } from "module";
 import { readData } from "./formSubmit.js";
+import { tailwindClassBuilder } from "./tailwindClassBuilder.js";
+import tailwindClassList from "./tailwind-classes.json" with { type: "json" };
+import { sortTailwindClasses } from "./sortTailwindClasses.js";
+import { rewriteElement } from "./rewriteElement.js";
 
 // removed: createRequire and JSSoup setup
 
@@ -7,6 +11,7 @@ import { readData } from "./formSubmit.js";
 
 function createSoup(fileContents) {
   const parser = new DOMParser();
+  // console.log(parser.parseFromString(fileContents, "text/html"));
   return parser.parseFromString(fileContents, "text/html");
 }
 
@@ -15,23 +20,42 @@ function createClassList(classes) {
 }
 
 function iterateElements(soup) {
-  let currentElement = soup.body.firstElementChild; // replaced: soup.find("body")
   let currentElementClasses;
+  let categorizedClasses;
+  let sortedClassList;
+  let sortedClassString;
+  let currentElement = soup.body.firstElementChild; // replaced: soup.find("body")
+  // console.log(currentElement); //Element GOOD
+
+  // MOCK
+  let userOrderPref = [
+    "border color",
+    "colors",
+    "flex",
+    "paddings",
+    "text color",
+  ];
 
   while (currentElement !== null) {
     if (currentElement.nodeType === Node.TEXT_NODE) {
       // replaced: currentElement._text
       currentElement = currentElement.nextElementSibling;
+
       continue;
     }
     if (currentElement.className) {
       // replaced: currentElement.attrs.class
       currentElementClasses = createClassList(currentElement.className);
-      console.log(currentElementClasses);
-      // tailwindClassBuilder
-      // sortTailwindClasses
-      // rewriteElement
-      // rewriteHTMLFile
+
+      // console.log(currentElementClasses);
+      categorizedClasses = tailwindClassBuilder(
+        currentElementClasses,
+        tailwindClassList,
+      );
+      sortedClassList = sortTailwindClasses(categorizedClasses, userOrderPref);
+      sortedClassString = rewriteElement(sortedClassList);
+      currentElement.className = sortedClassString;
+      // console.log(sortedClassString);
     }
 
     if (currentElement.nextElementSibling) {
@@ -44,7 +68,11 @@ function iterateElements(soup) {
     }
 
     currentElement = currentElement.nextElementSibling; // replaced: currentElement.nextElement
+    // console.log(currentElement);
   }
+
+  let final = "<!doctype html>" + document.documentElement.innerHTML;
+  // console.log(final);
 }
 
 //This function takes the user input file and converts it to a string.
@@ -67,8 +95,9 @@ function iterateElements(soup) {
 async function main() {
   // const fileContents = getFileContents();
   const htmlContent = await readData();
+  // console.log(htmlContent);
   const soup = createSoup(htmlContent);
-  console.log(soup);
+  // console.log(soup);
   iterateElements(soup);
   // const elements = soup.nextElements();
   // console.log(elements);
