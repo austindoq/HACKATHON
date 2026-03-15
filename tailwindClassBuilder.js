@@ -53,9 +53,7 @@ function tailwindClassBuilder(userClasses, tailwindClassList) {
     categorizedClasses[category] = dedupedArray;
   }
 
-  // console.log(categorizedClasses);
   return categorizedClasses;
 }
 
 export { tailwindClassBuilder };
-// console.log(tailwindClassBuilder(userClasses, tailwindClassList));
