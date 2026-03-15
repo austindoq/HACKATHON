@@ -380,10 +380,7 @@
     "rounded-tr-xl",
     "rounded-xl"
   ],
-  "box": [
-    "box-border",
-    "box-content"
-  ],
+  "box": ["box-border", "box-content"],
   "colors": [
     "bg-blue-50",
     "bg-gray-50",
@@ -480,10 +477,7 @@
     "space-y-px",
     "space-y-reverse"
   ],
-  "forms": [
-    "focus-within",
-    "from-black"
-  ],
+  "forms": ["focus-within", "from-black"],
   "grid": [
     "col-auto",
     "col-span-1",
@@ -565,10 +559,7 @@
     "row-span-1",
     "row-span-full"
   ],
-  "group hover": [
-    "group-hover",
-    "group-hover"
-  ],
+  "group hover": ["group-hover", "group-hover"],
   "height": [
     "h-0",
     "h-1",
@@ -599,12 +590,7 @@
     "min-h-screen",
     "max-h-px"
   ],
-  "list": [
-    "list-disc",
-    "list-*",
-    "list-inside",
-    "list-outside"
-  ],
+  "list": ["list-disc", "list-*", "list-inside", "list-outside"],
   "margins": [
     "m-0",
     "m-1",
@@ -880,19 +866,9 @@
     "mx-11",
     "my-11"
   ],
-  "nums": [
-    "lining-nums",
-    "normal-nums",
-    "oldstyle-nums",
-    "stacked-fractions"
-  ],
-  "opacity": [
-    "opacity-10"
-  ],
-  "outline": [
-    "outline-black",
-    "outline-white"
-  ],
+  "nums": ["lining-nums", "normal-nums", "oldstyle-nums", "stacked-fractions"],
+  "opacity": ["opacity-10"],
+  "outline": ["outline-black", "outline-white"],
   "paddings": [
     "p-0",
     "p-1",
@@ -1143,17 +1119,8 @@
     "top-full",
     "top-px"
   ],
-  "pseudo class": [
-    "hover",
-    "focus"
-  ],
-  "responsive": [
-    "container",
-    "sm:",
-    "md:",
-    "lg:",
-    "xl:"
-  ],
+  "pseudo class": ["hover", "focus"],
+  "responsive": ["container", "sm:", "md:", "lg:", "xl:"],
   "ring": [
     "ring",
     "ring-0",
@@ -1206,9 +1173,7 @@
     "shadow-outline",
     "shadow-none"
   ],
-  "sizing": [
-    "h-11"
-  ],
+  "sizing": ["h-11"],
   "spacing": [
     "space-x-1",
     "space-x-*",
@@ -1221,12 +1186,7 @@
     "space-x-reverse",
     "space-y-reverse"
   ],
-  "svg": [
-    "fill-current",
-    "stroke-current",
-    "stroke-0",
-    "stroke-*"
-  ],
+  "svg": ["fill-current", "stroke-current", "stroke-0", "stroke-*"],
   "table": [
     "table",
     "table-caption",
@@ -1551,12 +1511,7 @@
     "translate-x-11",
     "translate-y-11"
   ],
-  "typography": [
-    "font-extralight",
-    "text-7xl",
-    "text-8xl",
-    "text-9xl"
-  ],
+  "typography": ["font-extralight", "text-7xl", "text-8xl", "text-9xl"],
   "utilities": [
     "cursor-auto",
     "cursor-default",
