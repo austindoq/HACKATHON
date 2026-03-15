@@ -29,6 +29,10 @@ function iterateElements(soup) {
   let currentElement = soup.find("body");
   let currentElementClasses;
   let categorizedClasses;
+  let sortedClassList;
+
+  // MOCK OBJECT
+  let userOrderPreference = ["border color", "colors", "flex", "paddings"];
 
   while (currentElement !== null) {
     if (currentElement._text) {
@@ -38,12 +42,18 @@ function iterateElements(soup) {
     if (currentElement.attrs.class) {
       currentElementClasses = createClassList(currentElement.attrs.class);
       console.log(`currentElementClasses: ${currentElementClasses}`);
+
       categorizedClasses = tailwindClassBuilder(
         currentElementClasses,
         tailwindClassList,
       );
       console.log(`categorizedClasses: ${JSON.stringify(categorizedClasses)}`);
-      // sortTailwindClasses
+
+      sortedClassList = sortTailwindClasses(
+        categorizedClasses,
+        userOrderPreference,
+      );
+      console.log(`sortedClassList: ${sortedClassList}`);
       // rewriteElement
       // rewriteHTMLFile
     }

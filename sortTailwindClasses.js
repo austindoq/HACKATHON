@@ -19,7 +19,7 @@ function sortTailwindClasses(userClassObj, userOrderPref) {
     }
   }
   for (const item in userClassObj) {
-    if (item == "others") {
+    if (item == "other") {
       for (const value of userClassObj[item]) {
         sortedOrderList.push(value);
       }
